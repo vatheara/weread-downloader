@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "cli-progress": "^3.10.0",
+    "prompt": "^1.2.0",
+    "request": "^2.88.2"
+  }
+}
