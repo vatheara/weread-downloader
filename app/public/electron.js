@@ -1,6 +1,7 @@
 const path = require('path');
+const axios = require('axios');
 
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow ,ipcMain } = require('electron');
 const isDev = require('electron-is-dev');
 
 function createWindow() {
@@ -9,27 +10,41 @@ function createWindow() {
     width: 800,
     height: 600,
     webPreferences: {
+      preload: path.join(__dirname, 'preload.js'),
       nodeIntegration: true,
     },
   });
-
+  
+  
+  
   // and load the index.html of the app.
   // win.loadFile("index.html");The
   win.loadURL(
     isDev
-      ? 'http://localhost:3000'
-      : `file://${path.join(__dirname, '../build/index.html')}`
-  );
-  // Open the DevTools.
-  if (isDev) {
-    win.webContents.openDevTools({ mode: 'detach' });
+    ? 'http://localhost:3000'
+    : `file://${path.join(__dirname, '../build/index.html')}`
+    );
+    // Open the DevTools.
+    if (isDev) {
+      win.webContents.openDevTools({ mode: 'detach' });
+    }
   }
-}
+  
+const  handleTest = async () =>{
+      data = await axios.get('https://api.weread.asia/webapi/Initialize').then(res=> {
+          return res.data;
+      })
+      return data;
+    }
 
+    
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.whenReady().then(createWindow);
+app.whenReady().then(() => {
+  ipcMain.handle('getCate',handleTest);
+  createWindow();
+});
 
 // Quit when all windows are closed, except on macOS. There, it's common
 // for applications and their menu bar to stay active until the user quits
