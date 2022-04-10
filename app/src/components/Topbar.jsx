@@ -1,5 +1,5 @@
 import React from 'react';
-import { Tabs } from  'antd';
+import { Tabs , Row, Col } from  'antd';
 const { TabPane } = Tabs;
 
 function callback(key){
@@ -17,7 +17,14 @@ const Topbar = () => {
         <div className='topbar'>
         <Tabs defaultActiveKey='1' onChange={callback} tabBarStyle={{margin:0}}>
             <TabPane tab={<div className='tab'>អភិវឌ្ឍខ្លួន</div>} key="1">
-                <h1>this tab 1</h1>
+                <Row gutter={[16,16]}>
+                <Col span={4} >test</Col>
+                <Col span={4} >test</Col>
+                <Col span={4} >test</Col>
+                <Col span={4} >test</Col>
+                <Col span={4} >test</Col>
+                <Col span={4} >test</Col>
+                </Row>
             </TabPane>
             <TabPane tab={<div className='tab'>អាជីវកម្ម</div>} key="2">
                 <h1>this tab 2</h1>
