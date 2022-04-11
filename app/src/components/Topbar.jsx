@@ -15,15 +15,38 @@ const Topbar = () => {
     fetchcategory();
     return (
         <div className='topbar'>
-        <Tabs defaultActiveKey='1' onChange={callback} tabBarStyle={{margin:0}}>
+        <Tabs defaultActiveKey='1' onChange={callback}>
             <TabPane tab={<div className='tab'>អភិវឌ្ឍខ្លួន</div>} key="1">
                 <Row gutter={[16,16]}>
-                <Col span={4} >test</Col>
-                <Col span={4} >test</Col>
-                <Col span={4} >test</Col>
-                <Col span={4} >test</Col>
-                <Col span={4} >test</Col>
-                <Col span={4} >test</Col>
+                    <Col className='book-card' span={3} >
+                        <img src='https://image.weread.asia/Upload/20220214/ea56p0778p4ef0p82f4p8ec7167af1e4.jpg'></img>
+                    </Col>
+                    <Col className='book-card' span={3} >
+                        <img src='https://image.weread.asia/Upload/20220214/ea56p0778p4ef0p82f4p8ec7167af1e4.jpg'></img>
+                        <div className='book-title'>Test</div>
+                        <div>2022</div>
+                    </Col>
+                    <Col className='book-card' span={3} >
+                        <img src='https://image.weread.asia/Upload/20220214/ea56p0778p4ef0p82f4p8ec7167af1e4.jpg'></img>
+                    </Col>
+                    <Col className='book-card' span={3} >
+                        <img src='https://image.weread.asia/Upload/20220214/ea56p0778p4ef0p82f4p8ec7167af1e4.jpg'></img>
+                    </Col>
+                    <Col className='book-card' span={3} >
+                        <img src='https://image.weread.asia/Upload/20220214/ea56p0778p4ef0p82f4p8ec7167af1e4.jpg'></img>
+                    </Col>
+                    <Col className='book-card' span={3} >
+                        <img src='https://image.weread.asia/Upload/20220214/ea56p0778p4ef0p82f4p8ec7167af1e4.jpg'></img>
+                    </Col>
+                    <Col className='book-card' span={3} >
+                        <img src='https://image.weread.asia/Upload/20220214/ea56p0778p4ef0p82f4p8ec7167af1e4.jpg'></img>
+                    </Col>
+                    <Col className='book-card' span={3} >
+                        <img src='https://image.weread.asia/Upload/20220214/ea56p0778p4ef0p82f4p8ec7167af1e4.jpg'></img>
+                    </Col>
+                    <Col className='book-card' span={3} >
+                        <img src='https://image.weread.asia/Upload/20220214/ea56p0778p4ef0p82f4p8ec7167af1e4.jpg'></img>
+                    </Col>
                 </Row>
             </TabPane>
             <TabPane tab={<div className='tab'>អាជីវកម្ម</div>} key="2">

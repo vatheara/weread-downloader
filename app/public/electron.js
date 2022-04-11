@@ -7,7 +7,7 @@ const isDev = require('electron-is-dev');
 function createWindow() {
   // Create the browser window.
   const win = new BrowserWindow({
-    width: 800,
+    width: 1000,
     height: 600,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
@@ -31,18 +31,31 @@ function createWindow() {
   }
   
 const  handleTest = async () =>{
-      data = await axios.get('https://api.weread.asia/webapi/Initialize').then(res=> {
+      let data = await axios.get('https://api.weread.asia/webapi/Initialize').then(res=> {
           return res.data;
       })
       return data;
     }
 
+const fetchbook = async (subjectID , a, b) => {
+  let page = a || 1;
+  let pageSize = b || 5;
+    let data = await axios.get(`https://api.weread.asia/webapi/Initialize/assort?id=${subjectID}&page=${page}&pageSize=${pageSize}`).then(res => {
+        return res.data
+    })
+}
+
+const printme = (txt) => {
+  console.log(txt);
+}
     
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
   ipcMain.handle('getCate',handleTest);
+  ipcMain.handle('getBook',fetchbook);
+  ipcMain.handle('printme',printme);
   createWindow();
 });
 
