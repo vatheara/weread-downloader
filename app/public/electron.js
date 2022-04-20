@@ -37,16 +37,19 @@ const  handleTest = async () =>{
       return data;
     }
 
-const fetchbook = async (subjectID , a, b) => {
-  let page = a || 1;
-  let pageSize = b || 5;
+const fetchbook = async (arg) => {
+  let subjectID = arg.subjectID;
+  let page = arg.page || 1;
+  let pageSize = arg.pageSize || 5;
     let data = await axios.get(`https://api.weread.asia/webapi/Initialize/assort?id=${subjectID}&page=${page}&pageSize=${pageSize}`).then(res => {
         return res.data
     })
+    return data;
 }
 
-const printme = (txt) => {
-  console.log(txt);
+const printme = async (txt) => {
+  console.log('hello'+txt);
+  return 'test';
 }
     
 // This method will be called when Electron has finished
@@ -54,8 +57,14 @@ const printme = (txt) => {
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
   ipcMain.handle('getCate',handleTest);
-  ipcMain.handle('getBook',fetchbook);
-  ipcMain.handle('printme',printme);
+  ipcMain.handle('getBook',async (event,arg) => {
+    const result = await fetchbook(arg);
+    return result;
+  });
+  ipcMain.handle('printme',async (event, arg) => {
+    const result = await printme(arg);
+    return result;
+  });
   createWindow();
 });
 
