@@ -1,6 +1,5 @@
-import React , {useState} from 'react';
+import React , {useState, useEffect} from 'react';
 import { Tabs , Row, Col } from  'antd';
-import Books from './Books';
 
 const { TabPane } = Tabs;
 
@@ -28,19 +27,33 @@ const fetchbooks = async (param) => {
 const fetchcategory = async () => {
     let data = await window.electronAPI.getCate();
     console.log(data)
+    return data;
 }
 
 const Topbar = () => {
-    let books = fetchbooks({subjectID:5});
-    const [book, setBook] = useState(0);
-
-
+    // let books = fetchbooks({subjectID:5});
+    const [books, setBooks] = useState([]);
+    useEffect( () => {
+        async function fetchData() {
+            let res = await window.electronAPI.getBook({subjectID:5,pageSize:20});
+            console.log('data:',res);
+            setBooks(res.data);
+          }
+         fetchData();
+        
+    },[])
     return (
         <div className='topbar'>
         <Tabs defaultActiveKey='1' onChange={callback}>
             <TabPane tab={<div className='tab'>អភិវឌ្ឍខ្លួន</div>} key="1">
                 <Row gutter={[16,16]}>
-                    {books}
+                    {books.map((book) => (
+                        <Col className='book-card' span={3} >
+                            <img src={'https://image.weread.asia'+book.cover}></img>
+                            <div className='book-title'>{book.title}</div>
+                            <div>2022</div>
+                        </Col>
+                    ))}
                 </Row>
             </TabPane>
             <TabPane tab={<div className='tab'>អាជីវកម្ម</div>} key="2">
