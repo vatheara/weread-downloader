@@ -1,5 +1,7 @@
 import React , {useState, useEffect} from 'react';
 import { Tabs , Row, Col } from  'antd';
+import ReactJkMusicPlayer from 'react-jinke-music-player'
+import 'react-jinke-music-player/assets/index.css'
 
 const { TabPane } = Tabs;
 
@@ -31,6 +33,20 @@ const fetchcategory = async () => {
 }
 
 const Topbar = () => {
+    //audio player
+    let options = {
+        autoPlay:false,
+        showDownload: false,
+        showThemeSwitch: false,
+        showLyric:false,
+        showPlayMode:false,
+        mode:'full',
+      }
+    
+
+
+    const [audioList , setAudiolist] = useState([]);
+
     // let books = fetchbooks({subjectID:5});
     const [books, setBooks] = useState([]);
     useEffect( () => {
@@ -38,20 +54,26 @@ const Topbar = () => {
             let res = await window.electronAPI.getBook({subjectID:5,pageSize:20});
             console.log('data:',res);
             setBooks(res.data);
+            setAudiolist(res.data.map((b)=>{return {
+                name:b.title,
+                cover:'https://image.weread.asia'+b.cover,
+                musicSrc: 'https://weread-oss.weread.asia/'+b.audioUrl,
+                singer:'Audio Book'
+            }}))
           }
          fetchData();
-        
-    },[])
+         
+        },[])
+        console.log('list',audioList);
     return (
         <div className='topbar'>
         <Tabs defaultActiveKey='1' onChange={callback}>
             <TabPane tab={<div className='tab'>អភិវឌ្ឍខ្លួន</div>} key="1">
                 <Row gutter={[16,16]}>
-                    {books.map((book) => (
-                        <Col className='book-card' span={3} >
+                    {books.map((book, id) => (
+                        <Col className='book-card' key={id} span={3} onClick={ (key) => {console.log('clicked',key)}}>
                             <img src={'https://image.weread.asia'+book.cover}></img>
                             <div className='book-title'>{book.title}</div>
-                            <div>2022</div>
                         </Col>
                     ))}
                 </Row>
@@ -84,6 +106,7 @@ const Topbar = () => {
                 <h1>this tab 3</h1>
             </TabPane>
         </Tabs>
+        <ReactJkMusicPlayer audioLists={audioList} {...options}/>
         </div>
     )
 }
