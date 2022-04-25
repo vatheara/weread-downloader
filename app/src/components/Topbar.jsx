@@ -51,7 +51,7 @@ const Topbar = () => {
     const [books, setBooks] = useState([]);
     useEffect( () => {
         async function fetchData() {
-            let res = await window.electronAPI.getBook({subjectID:5,pageSize:20});
+            let res = await window.electronAPI.getBook({subjectID:5,pageSize:60});
             console.log('data:',res);
             setBooks(res.data);
             setAudiolist(res.data.map((b)=>{return {
@@ -64,15 +64,18 @@ const Topbar = () => {
          fetchData();
          
         },[])
-        console.log('list',audioList);
+        // console.log('list',audioList);
+        const  [audioInstance, setAudioInstance ] = useState(null);
+
+
     return (
         <div className='topbar'>
         <Tabs defaultActiveKey='1' onChange={callback}>
             <TabPane tab={<div className='tab'>អភិវឌ្ឍខ្លួន</div>} key="1">
                 <Row gutter={[16,16]}>
                     {books.map((book, id) => (
-                        <Col className='book-card' key={id} span={3} onClick={ (key) => {console.log('clicked',key)}}>
-                            <img src={'https://image.weread.asia'+book.cover}></img>
+                        <Col className='book-card' key={id} span={3} >
+                            <img src={'https://image.weread.asia'+book.cover} onClick={ () => {audioInstance.playByIndex(id)}}></img>
                             <div className='book-title'>{book.title}</div>
                         </Col>
                     ))}
@@ -106,7 +109,11 @@ const Topbar = () => {
                 <h1>this tab 3</h1>
             </TabPane>
         </Tabs>
-        <ReactJkMusicPlayer audioLists={audioList} {...options}/>
+        <ReactJkMusicPlayer
+            getAudioInstance={(instance) => {
+            setAudioInstance(instance)
+            }}
+            audioLists={audioList} {...options}/>
         </div>
     )
 }
