@@ -1,5 +1,6 @@
 body {
   background-color: #1d1d21 !important;
+  min-width: 1000px;
 }
 
 .topbar {
@@ -39,4 +40,8 @@ body {
 
 .ant-tabs-top > .ant-tabs-nav::before, .ant-tabs-bottom > .ant-tabs-nav::before, .ant-tabs-top > div > .ant-tabs-nav::before, .ant-tabs-bottom > div > .ant-tabs-nav::before{
   border-bottom: 1px solid #000000;
+}
+
+.ant-tabs-content {
+  margin-bottom: 6em;
 }
