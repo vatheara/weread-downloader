@@ -2,7 +2,7 @@ const path = require('path');
 const axios = require('axios');
 
 const { app, BrowserWindow ,ipcMain } = require('electron');
-const isDev = require('electron-is-dev');
+// const isDev = require('electron-is-dev');
 
 function createWindow() {
   // Create the browser window.
@@ -21,14 +21,12 @@ function createWindow() {
   // and load the index.html of the app.
   // win.loadFile("index.html");The
   win.loadURL(
-    isDev
-    ? 'http://localhost:3000'
-    : `file://${path.join(__dirname, '../build/index.html')}`
+    `file://${path.join(__dirname, '../build/index.html')}`
     );
     // Open the DevTools.
-    if (isDev) {
-      win.webContents.openDevTools({ mode: 'detach' });
-    }
+    // if (isDev) {
+    //   win.webContents.openDevTools({ mode: 'detach' });
+    // }
   }
   
 const  handleTest = async () =>{
